@@ -1,7 +1,8 @@
 clear;
+close all;
 clc;
 %% MAIN CODE
-filename = 'bg.mp3';
+filename = 'wm.mp3';
 [X,Fs] = audioread(filename);
 info = audioinfo(filename);
 T = 1/Fs;             % Sampling period       
@@ -14,12 +15,12 @@ s = 1:20000;
 para = round(L/numel(s));
 
 transfer1=zeros(numel(s),2);
-transfer1(:,1)=10.*(s./500.5 +1)./(s./50.5+1)./(s./2121.5 +1);
-transfer1(:,2)=10.*(s./500.5 +1)./(s./50.5+1)./(s./2121.5 +1);
+transfer1(:,1)=1./10./(s./500.5 +1).*(s./50.5+1).*(s./2121.5 +1);
+transfer1(:,2)=1./10./(s./500.5 +1).*(s./50.5+1).*(s./2121.5 +1);
 
 transfer2=zeros(numel(s),2);
-transfer2(:,1)=1./10./(s./500.5 +1).*(s./50.5+1).*(s./2121.5 +1);
-transfer2(:,2)=1./10./(s./500.5 +1).*(s./50.5+1).*(s./2121.5 +1);
+transfer2(:,1)=10.*(s./500.5 +1)./(s./50.5+1)./(s./2121.5 +1);
+transfer2(:,2)=10.*(s./500.5 +1)./(s./50.5+1)./(s./2121.5 +1);
 
 filter1 = zeros(numel(Y)/2,2);
 w = zeros(numel(Y)/2,1);
@@ -63,6 +64,7 @@ f = Fs*(0:(L/2))/L;
 subplot(2,2,1)
 semilogx(f,P1) 
 xlim([20 20000])
+ylim([0 0.1])
 title('Original')
 xlabel('f (Hz)')
 ylabel('amplitude')
@@ -76,6 +78,7 @@ f = Fs*(0:(L/2))/L;
 subplot(2,2,2)
 semilogx(f,P1) 
 xlim([20 20000])
+ylim([0 0.1])
 title('only RIAA')
 xlabel('f (Hz)')
 ylabel('amplitude')
@@ -89,6 +92,7 @@ f = Fs*(0:(L/2))/L;
 subplot(2,2,3)
 semilogx(f,P1) 
 xlim([20 20000])
+ylim([0 0.1])
 title('only Equalize')
 xlabel('f (Hz)')
 ylabel('amplitude')
@@ -102,6 +106,7 @@ f = Fs*(0:(L/2))/L;
 subplot(2,2,4)
 semilogx(f,P1) 
 xlim([20 20000])
+ylim([0 0.1])
 title('RIAA + Equalize')
 xlabel('f (Hz)')
 ylabel('amplitude')
